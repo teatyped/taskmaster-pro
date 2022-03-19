@@ -173,7 +173,7 @@ $(".card .list-group"). sortable({
           .text()
           .trim();
           
-      console.log("pulled info " + text, date); //delete later used to track info
+     // console.log("pulled info " + text, date); //delete later used to track info
       // add task data to the temp array as object
       tempArr.push({
         text: text,
@@ -184,7 +184,7 @@ $(".card .list-group"). sortable({
     var arrName = $(this)
     .attr("id")
     .replace("list-", "");
-    console.log(tempArr);
+    //console.log(tempArr);
     //update array on tasks object and save
     tasks[arrName] = tempArr;
     saveTasks();
@@ -192,6 +192,22 @@ $(".card .list-group"). sortable({
   }
 });
 
+// trash 
+$("#trash").droppable({
+  accept: ".card .list-group-item",
+  tolerance: "touch",
+  drop: function(event, ui){
+    console.log("drop"),
+    ui.draggable.remove();
+  },
+  over: function(event, ui){
+    console.log("over");
+  },
+  out: function(event, ui){
+    console.log("out");
+  }
+
+});
 
 
 
