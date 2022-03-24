@@ -11,6 +11,9 @@ var createTask = function (taskText, taskDate, taskList) {
   // append span and p element to parent li
   taskLi.append(taskSpan, taskP);
 
+  // check due date
+  auditTask(taskLi);
+
   // append to ul list on the page
   $("#list-" + taskList).append(taskLi);
 };
@@ -42,6 +45,31 @@ var saveTasks = function () {
   localStorage.setItem("tasks", JSON.stringify(tasks));
 };
 
+// audit task // check task due dates
+var auditTask = function(taskEl){
+  //get date from task element
+  var date = $(taskEl).find("span").text().trim();
+
+  //convert to moment object at 5:00pm
+  // "L" =  user local time
+  // .set hour 17 in military time 
+  var time = moment(date, "L").set("hour", 17);
+  console.log("time set is "+ time);
+
+  // remove any old classes from element
+  $(taskEl).removeClass("list-group-item-warning list-group-item-danger");
+
+  // apply new class if task is near/ over due date
+  if(moment().isAfter(time)){
+    $(taskEl).addClass("list-group-item-danger");
+  }
+  else if (Math.abs(moment().diff(time, "days")) <= 2){
+    $(taskEl).addClass("list-group-item-warning");
+  }
+
+};
+
+
 // on click to <p> in to do list
 $(".list-group").on("click", "p", function () {
   var text = $(this).text().trim();
@@ -51,7 +79,7 @@ $(".list-group").on("click", "p", function () {
 
   console.log(text);
 });
-
+// text area of list group is edited
 $(".list-group").on("blur", "textarea", function () {
   var text = $(this).val().trim();
 
@@ -69,7 +97,7 @@ $(".list-group").on("blur", "textarea", function () {
   $(this).replaceWith(taskP);
 });
 
-//due date was clicked
+//due date in list group was clicked// get and update current info
 $(".list-group").on("click", "span", function () {
   //get current text
   var date = $(this).text().trim();
@@ -96,7 +124,7 @@ $(".list-group").on("click", "span", function () {
   dateInput.trigger("focus");
 });
 
-// on blur
+// on blur// Change
 // value of due date was changed
 $(".list-group").on("change", "input[type='text']", function () {
   // get current text
@@ -119,7 +147,15 @@ $(".list-group").on("change", "input[type='text']", function () {
 
   // replace input with span element
   $(this).replaceWith(taskSpan);
+
+  auditTask($(taskSpan).closest(".list-group-item"));
+
 });
+
+
+
+
+
 
 // sortable
 
