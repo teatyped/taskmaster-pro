@@ -47,6 +47,9 @@ var saveTasks = function () {
 
 // audit task // check task due dates
 var auditTask = function(taskEl){
+
+  console.log("auditTask is called");
+
   //get date from task element
   var date = $(taskEl).find("span").text().trim();
 
@@ -266,6 +269,16 @@ $("#remove-tasks").on("click", function () {
   }
   saveTasks();
 });
+
+// timer interval to run audit Task every 30mins
+setInterval(function(){
+  $(".card .list-group-item").each(function(index, el){
+    auditTask(el);
+  });
+}, 1800000);
+
+
+
 
 // load tasks for the first time
 loadTasks();
