@@ -37,13 +37,13 @@
         
         <button
           id="create-task"
-          class="btn btn-block btn-success"
+          class="btn btn-block btn-add"
           data-toggle="modal"
           data-target="#task-form-modal"
         >
           <span class="oi oi-plus mr-2"></span>Add Task
         </button>
-        <button id="remove-tasks" class="btn btn-block btn-danger">
+        <button id="remove-tasks" class="btn btn-block btn-close">
           <span class="oi oi-trash mr-2"></span>Delete All Tasks
         </button>
         <span class="oi oi-task display-1 text-center mb-2 d-none d-lg-block mt-auto"></span>
@@ -91,9 +91,9 @@
           <!-- done end -->
         </div>
         <!-- trash zone start  -->
-        <div id="trash" class="mt-auto">
-          <div class="w-100 bg-danger p-3 text-center text-light display-4">
-            <span class="oi oi-trash mr-2"></span>
+        <div id="trash" class="mt-auto overflow-hidden">
+          <div class="w-100 p-3 text-center bottom-trash">
+            <span class="oi oi-trash mr-2 "></span>
             Drop here to Remove
           </div>
         </div>
@@ -152,7 +152,7 @@
             >
               Close
             </button>
-            <button type="button" class="btn btn-primary">Save Task</button>
+            <button type="button" class="btn btn-save">Save Task</button>
           </div>
         </div>
       </div>
